@@ -46,42 +46,26 @@ void showArray(int[,] inputArray)
         Console.WriteLine();
     }
 }
-int[,] GetSortElementsFromMaxToMin(int[,] array)
+int[,] GetSortElementsFromMaxToMin(int[,] inputMatrix)
 {
-    for (int i = 0; i < array.GetLength(0); i++)
+    for (int i = 0; i < inputMatrix.GetLength(0); i++)
     {
-        for (int j = i+1; j < array.GetLength(1); j++)
-        for (int k = 0; k < array.GetLength(1) - 1; k++)
+        for (int j = i+1; j < inputMatrix.GetLength(1); j++)
+        for (int k = 0; k < inputMatrix.GetLength(1) - 1; k++)
             {
-                if (array[i, k] < array[i, k + 1])
+                if (inputMatrix[i, k] < inputMatrix[i, k + 1])
                 {
-                    int temp = array[i, k + 1];
-                    array[i, k + 1] = array[i, k];
-                    array[i, k] = temp;
+                    int buffer = inputMatrix[i, k + 1];
+                    inputMatrix[i, k + 1] = inputMatrix[i, k];
+                    inputMatrix[i, k] = buffer;
                 }
             }
     }
-    return array;
+    return inputMatrix;
 }  
 
-// {
-//     int[] coordinate = new int[2];
-//     int maxPosition = inputMatrix[0,0];
-//     for (int j = 0; j < inputMatrix.GetLength(1); j++)
-//     {
-//         for (int i = j+1; j < inputMatrix.GetLength(0); j++)
-//         {
-//             if(inputMatrix[i,j] > maxPosition)
-//             maxPosition = inputMatrix[i,j];
-//             int buffer = inputMatrix[i,j];
-//             inputMatrix[i,j] = maxPosition;
-//             maxPosition = buffer;
-//         }  
-//     }
-//     return inputMatrix;
-// }
 int[,] generatedArray = GenerateArray(5, 5, 10);
 showArray(generatedArray);
 Console.WriteLine();
-int[,] swoppedArray = GetSortElementsFromMaxToMin(generatedArray); // (generatedArray, 1, 2)-замена значений между 1 и 2 строкой
+int[,] swoppedArray = GetSortElementsFromMaxToMin(generatedArray);
 showArray(swoppedArray);
