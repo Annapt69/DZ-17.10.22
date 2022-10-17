@@ -8,14 +8,14 @@
 5 2 6 7
 Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
 */
-int[,] GenerateArray(int height, int weight, int deviation)
+int[,] GenerateArray(int height, int weight, int startPoint, int endPoint)
 {
     int[,] generatedArray = new int[height, weight];
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < weight; j++)
         {
-            generatedArray[i, j] = new Random().Next(-deviation, deviation + 1);
+            generatedArray[i, j] = new Random().Next(1, 5);
         }
     }
     return generatedArray;
@@ -44,31 +44,41 @@ void showArray(int[,] inputArray)
         Console.WriteLine();
     }
 }
-int[,] inputMatrix = new int[4, 4];
-void NumberRowMinSumElements(int[,] array)
+int[] SumRowsArray(int[,] array)
 {
-    int minRow = 0;
-    int minSumRow = 0;
-    int sumRow = 0;
-    for (int i = 0; i < inputMatrix.GetLength(1); i++)
+    int[] sumRow = new int[array.GetLength(0)];
+
+    for (int i = 0; i < array.GetLength(0); i++)
     {
-        minRow += inputMatrix[0, i];
-    }
-    for (int i = 0; i < inputMatrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < inputMatrix.GetLength(1); j++) sumRow += inputMatrix[i, j];
-        if (sumRow < minRow)
+        int sum = 0;
+        for (int j = 0; j < array.GetLength(1); j++)
         {
-            minRow = sumRow;
-            minSumRow = i;
+
+            sum += array[i, j];
+
         }
-        sumRow = 0;
+        sumRow[i] = sum;
     }
-    Console.Write($"Наименьшая сумма элементов:{minSumRow + 1} строка");
+    return sumRow;
+}
+void PrintSumRow(int[] array)
+{
+    int minSumElemets = array[0];
+    int row = 0;
+    for (int i = 0; i < array.Length; i++)
+    {
+        if (array[i] < minSumElemets)
+        {
+            minSumElemets = array[i];
+            row = i + 1;
+        }
+
+    }
+    Console.WriteLine($"Номер строки с наименьшей суммой элементов:{row}");
 }
 
-int[,] generatedArray = GenerateArray(3, 4, 10);
+int[,] generatedArray = GenerateArray(5, 6, 1, 5);
 showArray(generatedArray);
 Console.WriteLine();
-NumberRowMinSumElements(generatedArray);
-// showArray(swoppedArray);
+int[] sumOfRows = SumRowsArray(generatedArray);
+PrintSumRow(SumRowsArray(generatedArray));
